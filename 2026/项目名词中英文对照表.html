@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT项目管理名词中英对照查询</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        body {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f8f9fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #007bff;
+        }
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        #search-input {
+            flex: 1;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            outline: none;
+        }
+        #search-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        .alphabet-nav {
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .alphabet-btn {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .alphabet-btn:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: normal;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        .no-result {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>IT项目管理名词中英对照查询</h1>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="输入英文/中文关键词搜索（如：项目管理、Agile）">
+    </div>
+
+    <div class="alphabet-nav">
+        <button class="alphabet-btn" data-letter="all">全部</button>
+        <button class="alphabet-btn" data-letter="A">A</button>
+        <button class="alphabet-btn" data-letter="B">B</button>
+        <button class="alphabet-btn" data-letter="C">C</button>
+        <button class="alphabet-btn" data-letter="D">D</button>
+        <button class="alphabet-btn" data-letter="E">E</button>
+        <button class="alphabet-btn" data-letter="F">F</button>
+        <button class="alphabet-btn" data-letter="G">G</button>
+        <button class="alphabet-btn" data-letter="I">I</button>
+        <button class="alphabet-btn" data-letter="J">J</button>
+        <button class="alphabet-btn" data-letter="L">L</button>
+        <button class="alphabet-btn" data-letter="M">M</button>
+        <button class="alphabet-btn" data-letter="N">N</button>
+        <button class="alphabet-btn" data-letter="O">O</button>
+        <button class="alphabet-btn" data-letter="P">P</button>
+        <button class="alphabet-btn" data-letter="Q">Q</button>
+        <button class="alphabet-btn" data-letter="R">R</button>
+        <button class="alphabet-btn" data-letter="S">S</button>
+        <button class="alphabet-btn" data-letter="T">T</button>
+        <button class="alphabet-btn" data-letter="U">U</button>
+        <button class="alphabet-btn" data-letter="V">V</button>
+        <button class="alphabet-btn" data-letter="W">W</button>
+    </div>
+
+    <table id="dict-table">
+        <thead>
+            <tr>
+                <th>英文</th>
+                <th>中文</th>
+            </tr>
+        </thead>
+        <tbody id="dict-body">
+            <!-- 数据会通过JS自动填充 -->
+        </tbody>
+    </table>
+
+    <div class="no-result" id="no-result">未找到匹配的结果</div>
+
+    <script>
+        // IT项目管理名词数据（CSV格式转换的数组）
+        const dictData = [
+            ["Acceptance", "验收"],
+            ["Acceptance Criteria", "验收标准"],
+            ["Agile Development", "敏捷开发"],
+            ["Budget", "预算"],
+            ["Bug", "缺陷"],
+            ["CCB", "变更控制委员会"],
+            ["Change Control", "变更控制"],
+            ["Change Request", "变更请求"],
+            ["Client", "客户"],
+            ["Contingency Plan", "应急预案"],
+            ["Cost Management", "成本管理"],
+            ["Cost Variance", "成本偏差"],
+            ["CPI", "成本绩效指数"],
+            ["Critical Path", "关键路径"],
+            ["CPM", "关键路径法"],
+            ["Daily Standup", "每日站会"],
+            ["Deliverable", "交付物"],
+            ["Defect", "缺陷"],
+            ["Duration", "工期"],
+            ["Earned Value Management", "挣值管理"],
+            ["Estimation", "估算"],
+            ["Execution", "项目执行"],
+            ["Functional Requirement", "功能需求"],
+            ["Gantt Chart", "甘特图"],
+            ["Go-Live", "上线"],
+            ["Issue", "问题"],
+            ["Issue Log", "问题日志"],
+            ["Iteration", "迭代"],
+            ["Launch", "上线"],
+            ["Meeting", "会议"],
+            ["Milestone", "里程碑"],
+            ["Non-Functional Requirement", "非功能需求"],
+            ["O&M", "运维"],
+            ["Patch", "补丁"],
+            ["PM", "项目经理"],
+            ["PMO", "项目办公室"],
+            ["Predecessor", "前置任务"],
+            ["Product Backlog", "产品待办列表"],
+            ["Product Owner", "产品负责人"],
+            ["Project", "项目"],
+            ["Project Charter", "项目章程"],
+            ["Project Closure", "项目收尾"],
+            ["Project Initiation", "项目启动"],
+            ["Project Life Cycle", "项目生命周期"],
+            ["Project Management", "项目管理"],
+            ["Project Monitoring & Control", "项目监控"],
+            ["Project Phase", "项目阶段"],
+            ["Project Plan", "项目计划"],
+            ["Project Scope", "项目范围"],
+            ["Project Stakeholder", "项目干系人"],
+            ["Quality Assurance", "质量保证"],
+            ["Quality Control", "质量控制"],
+            ["Quality Management", "质量管理"],
+            ["Regular Meeting", "例会"],
+            ["Release", "发布"],
+            ["Requirements Analysis", "需求分析"],
+            ["Requirements Change", "需求变更"],
+            ["Retrospective", "回顾会"],
+            ["Risk Acceptance", "风险接受"],
+            ["Risk Assessment", "风险评估"],
+            ["Risk Avoidance", "风险规避"],
+            ["Risk Identification", "风险识别"],
+            ["Risk Management", "风险管理"],
+            ["Risk Mitigation", "风险减轻"],
+            ["Risk Response", "风险应对"],
+            ["Risk Transfer", "风险转移"],
+            ["ROI", "投资回报率"],
+            ["Schedule", "进度计划"],
+            ["Schedule Variance", "进度偏差"],
+            ["Scope Creep", "范围蔓延"],
+            ["Scope Management", "范围管理"],
+            ["Scope Statement", "范围说明书"],
+            ["Scrum Master", "敏捷教练"],
+            ["SPI", "进度绩效指数"],
+            ["Sprint", "冲刺"],
+            ["Sprint Backlog", "冲刺待办列表"],
+            ["Status Report", "状态报告"],
+            ["Successor", "后置任务"],
+            ["System Testing", "系统测试"],
+            ["Technical Support", "技术支持"],
+            ["Testing", "测试"],
+            ["UAT", "用户验收测试"],
+            ["Unit Testing", "单元测试"],
+            ["User Acceptance Testing", "用户验收测试"],
+            ["User Requirement", "用户需求"],
+            ["Vendor", "供应商"],
+            ["Version", "版本"],
+            ["Waterfall Model", "瀑布模型"]
+        ];
+
+        // 初始化表格
+        const dictBody = document.getElementById('dict-body');
+        const noResult = document.getElementById('no-result');
+        let currentData = [...dictData];
+
+        // 渲染表格数据
+        function renderTable(data) {
+            dictBody.innerHTML = '';
+            if (data.length === 0) {
+                noResult.style.display = 'block';
+                return;
+            }
+            noResult.style.display = 'none';
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                const tdEn = document.createElement('td');
+                const tdCn = document.createElement('td');
+                tdEn.textContent = item[0];
+                tdCn.textContent = item[1];
+                tr.appendChild(tdEn);
+                tr.appendChild(tdCn);
+                dictBody.appendChild(tr);
+            });
+        }
+
+        // 搜索功能
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', function() {
+            const keyword = this.value.trim().toLowerCase();
+            if (!keyword) {
+                currentData = [...dictData];
+                renderTable(currentData);
+                return;
+            }
+            const filtered = dictData.filter(item => {
+                const en = item[0].toLowerCase();
+                const cn = item[1].toLowerCase();
+                return en.includes(keyword) || cn.includes(keyword);
+            });
+            renderTable(filtered);
+        });
+
+        // 字母导航功能
+        const alphabetBtns = document.querySelectorAll('.alphabet-btn');
+        alphabetBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const letter = this.dataset.letter;
+                if (letter === 'all') {
+                    renderTable(dictData);
+                    return;
+                }
+                const filtered = dictData.filter(item => {
+                    return item[0].startsWith(letter);
+                });
+                renderTable(filtered);
+            });
+        });
+
+        // 初始化加载全部数据
+        renderTable(dictData);
+    </script>
+</body>
+</html>
